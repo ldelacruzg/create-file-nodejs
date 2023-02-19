@@ -1,14 +1,14 @@
-const fs = require('fs');
-const readline = require('readline');
+import { existsSync, writeFile } from "fs"
+import { createInterface } from "readline"
 
-const rl = readline.createInterface({
+const rl = createInterface({
     input: process.stdin,
     output: process.stdout
 });
 
 function askFileName() {
     rl.question('Escribe el nombre del archivo: ', (fileName) => {
-        if (fs.existsSync(`${fileName}.txt`)) {
+        if (existsSync(`${fileName}.txt`)) {
             console.log(`El archivo ${fileName}.txt ya existe. Por favor, escribe otro nombre de archivo.`);
             askFileName();
         } else {
@@ -19,7 +19,7 @@ function askFileName() {
 
 function askFileContent(fileName) {
     rl.question('Escribe el contenido del archivo: ', (fileContent) => {
-        fs.writeFile(`${fileName}.txt`, fileContent, (err) => {
+        writeFile(`${fileName}.txt`, fileContent, (err) => {
             if (err) {
                 console.log(`Error al crear el archivo: ${err}`);
             } else {
